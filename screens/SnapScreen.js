@@ -3,15 +3,17 @@ import { View, TouchableOpacity, Text } from "react-native";
 import { Camera } from "expo-camera";
 import { useIsFocused } from "@react-navigation/native";
 
+import {connect} from 'react-redux';
 import IconFontAwesome from "react-native-vector-icons/FontAwesome";
 import IconIonic from "react-native-vector-icons/Ionicons";
 import { Button, Overlay } from "react-native-elements";
 
-function SnapScreen() {
+function SnapScreen(props) {
   const [hasPermission, setHasPermission] = useState(null);
   const [type, setType] = useState(Camera.Constants.Type.back);
   const [flash, setFlash] = useState(Camera.Constants.FlashMode.torch);
   const [visible, setVisible] = useState(false);
+  const [pictureList, setPictureList] = useState([]);
 
   let camera = useRef(null);
 
@@ -105,10 +107,11 @@ function SnapScreen() {
               method: 'POST',
               body: data
             });
-            var response = await rawResponse.json();
+            var newPicture = await rawResponse.json();
+            setPictureList(newPicture)
            setVisible(false);
-           }
-      
+           }props.onSubmitPicture(pictureList);
+    
        }
      }
      icon={
@@ -126,4 +129,16 @@ function SnapScreen() {
 </View>;
 }
 
-export default SnapScreen;
+
+function mapDispatchToProps(dispatch) {
+  return {
+    onSubmitPicture: function(pictureList) { 
+      dispatch( {type: 'savePicture', pictureList: pictureList }) 
+    }
+  }
+}
+
+export default connect(
+    null, 
+    mapDispatchToProps
+)(SnapScreen);

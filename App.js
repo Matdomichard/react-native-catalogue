@@ -1,3 +1,6 @@
+import { LogBox } from 'react-native';
+LogBox.ignoreLogs(['Warning: ...']);
+
 import React from 'react';
 
 // Les imports des pages
@@ -11,6 +14,12 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import { Ionicons } from '@expo/vector-icons';
+
+import {createStore, combineReducers} from 'redux';
+import {Provider} from 'react-redux';
+import pictureList from './reducers/picture';
+
+const store = createStore(combineReducers({pictureList}));
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -47,11 +56,13 @@ const BottomNavigator = () => {
  
  export default function App() {
   return (
+    <Provider store={store}>
     <NavigationContainer>
       <Stack.Navigator screenOptions={{headerShown: false}}>
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="BottomNavigator" component={BottomNavigator} />
       </Stack.Navigator>
     </NavigationContainer>
+    </Provider>
   );
  }
