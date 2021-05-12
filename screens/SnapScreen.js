@@ -13,7 +13,7 @@ function SnapScreen() {
   const [flash, setFlash] = useState(Camera.Constants.FlashMode.torch);
   const [visible, setVisible] = useState(false);
 
-  var camera = useRef(null);
+  let camera = useRef(null);
 
   const isFocused = useIsFocused();
 
@@ -24,7 +24,7 @@ function SnapScreen() {
     })();
   }, []);
 
-  var cameraDisplay;
+  let cameraDisplay;
   if (hasPermission && isFocused) {
     cameraDisplay = (
       <Camera ref={ref=> (camera = ref)} style={{ flex: 1}} type={type} flashMode={flash}>
