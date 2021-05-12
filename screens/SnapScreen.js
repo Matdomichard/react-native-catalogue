@@ -93,9 +93,24 @@ function SnapScreen() {
        setVisible(true);
        if (camera) {
          let photo = await camera.takePictureAsync({quality: 0.3});
-         setVisible(false);
+
+        var data = new FormData();
+          data.append('avatar', { 
+              uri: photo.uri, 
+              type: 'image/jpeg', 
+              name: 'avatar.jpg',
+              });
+
+            var rawResponse = await fetch("http://192.168.43.85:3000/upload", {
+              method: 'POST',
+              body: data
+            });
+            var response = await rawResponse.json();
+           setVisible(false);
+           }
+      
        }
-     }}
+     }
      icon={
          <IconFontAwesome
          name="save"
