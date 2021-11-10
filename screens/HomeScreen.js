@@ -1,41 +1,72 @@
-import React from "react";
-import { StyleSheet, ImageBackground, Text, View } from "react-native";
+import React, {useState} from 'react';
+import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 
 import { Button, Input } from "react-native-elements";
 import Icon from "react-native-vector-icons/FontAwesome";
+import {connect} from 'react-redux';
 
-export default function HomeScreen(props) {
+import Ionicons from "react-native-vector-icons/Ionicons";
+
+function HomeScreen(props) {
+  const [pseudo, setPseudo] = useState('');
+
   return (
-    <ImageBackground
-      source={require("../assets/home.jpg")}
-      style={{ width: "100%", height: "100%" }}
-    >
-      <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-        <View
-          style={{
-            alignItems: "center",
-            justifyContent: "center",
-            width: "60%",
-            height: "10%",
+    <View style={styles.container}>
+      <View
+        style={{
+          alignItems: "center",
+          justifyContent: "center",
+          width: "60%",
+          height: "10%",
+        }}
+      >
+        <Input
+          placeholder="Nom"
+          leftIcon={<Icon name="user" size={20} color="#C17543" />}
+          onChangeText={(val) => setPseudo(val)}
+        />
+
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => {
+            props.navigation.navigate("BottomNavigator", {
+              screen: "Gallery",
+            });
           }}
         >
-          <Input
-            placeholder="John"
-            leftIcon={<Icon name="user" size={24} color="#eb4d4b" />}
-          />
-          <Button
-            icon={<Icon name="arrow-right" size={20} color="#eb4d4b" />}
-            //C'est ce props .navigate qui va me mettre mon renvoi vers le bottomnavigator --> avec en screen la page qu'il me faut
-            title="Go to Gallery"
-            type="solid"
-            onPress={() => {
-              props.navigation.navigate("BottomNavigator", {
-                screen: "Gallery",
-              });
-            }}
-          />
-        </View>
+          <Ionicons name="arrow-forward-outline" size={25} style={{}} />
+        </TouchableOpacity>
       </View>
-    </ImageBackground>
+    </View>
   );
 }
+
+function mapDispatchToProps(dispatch) {
+  return {
+    onSubmitPseudo: function(pseudo) { 
+      dispatch( {type: 'savePseudo', pseudo: pseudo }) 
+    }
+  }
+}
+
+export default connect(
+    null, 
+    mapDispatchToProps
+)(HomeScreen);
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#E7C8B9",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  button: {
+    backgroundColor: '#C17543',
+    borderRadius: 1000,
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: 40,
+    width: 40,
+  },
+});
