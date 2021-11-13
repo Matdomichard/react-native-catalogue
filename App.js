@@ -18,8 +18,9 @@ import { Ionicons } from '@expo/vector-icons';
 import {createStore, combineReducers} from 'redux';
 import {Provider} from 'react-redux';
 import pictureList from './reducers/picture';
+import pseudo from './reducers/pseudo';
 
-const store = createStore(combineReducers({pictureList}));
+const store = createStore(combineReducers({pictureList, pseudo}));
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();

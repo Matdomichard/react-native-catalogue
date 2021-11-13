@@ -12,27 +12,16 @@ function HomeScreen(props) {
 
   return (
     <View style={styles.container}>
-      <View
-        style={{
-          alignItems: "center",
-          justifyContent: "center",
-          width: "60%",
-          height: "10%",
-        }}
-      >
-        <Input
-          placeholder="Nom"
-          leftIcon={<Icon name="user" size={20} color="#C17543" />}
-          onChangeText={(val) => setPseudo(val)}
-        />
-
         <TouchableOpacity
           style={styles.button}
-          onPress={() => { props.onSubmitPseudo(pseudo); props.navigation.navigate('BottomNavigator', { screen: 'Gallery' }) }}
+          onPress={() => {
+            props.navigation.navigate("BottomNavigator", {
+              screen: "Gallery",
+            });
+          }}
         >
           <Ionicons name="arrow-forward-outline" size={25} style={{}} />
         </TouchableOpacity>
-      </View>
     </View>
   );
 }

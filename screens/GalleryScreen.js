@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, {useState} from 'react';
 import { ScrollView } from 'react-native';
 import {Card, Badge, Text} from 'react-native-elements';
 
@@ -36,7 +36,7 @@ function GalleryScreen(props) {
 return (
   <ScrollView style={{marginTop: 25}}>
     
-    <Text h4 style={{textAlign: 'center'}}>John's Gallery</Text>
+    <Text h4 style={{textAlign: 'center'}}>{props.pseudo}'s Gallery</Text>
 
     {cardList}
   
@@ -47,7 +47,10 @@ return (
 
 function mapStateToProps(state) {
 
- return { pictureList : state.pictureList }
+ return { 
+   pictureList : state.pictureList, 
+   pseudo: state.pseudo
+ };
 }
 
 export default connect(
